@@ -113,8 +113,7 @@ function addToCart(productId) {
         updateCartCount();
         MostrarMensaje(product.name, product.type);
         
-        // Guardamos los cambios en el backend y localStorage
-        saveCartToBackend(product.id, 1);
+        
         saveCartToLocalStorage();
 
         // Recargamos los productos (álbumes y canciones) con los precios actualizados
@@ -225,7 +224,7 @@ function removeFromCart(productId) {
         updateCart();
         updateCartCount();
         saveCartToLocalStorage();
-        saveCartToBackend();  // Guardar el carrito actualizado
+        
     }
     // Animación de vibración en el ícono del carrito al eliminar 
     const cartIcon = document.getElementById('cart-icon');
@@ -393,7 +392,7 @@ document.getElementById('contact-form').addEventListener('submit', function (eve
     
 });
 
-// Guardar el carrito en el backend
+
 
 
 
