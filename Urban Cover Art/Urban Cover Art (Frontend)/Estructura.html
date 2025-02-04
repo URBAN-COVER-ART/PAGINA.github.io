@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
+    <title>Urban Cover Art</title>
+    <link rel="stylesheet" href="Estilos.css">
+    <script src="https://js.stripe.com/v3/"></script>
+</head>
+
+<body>
+
+    <!-- Fondo -->
+    <div id="background"></div>
+
+    <div class="oferta-especial">
+        <span class="oferta-temporal">¡Oferta temporal!</span> Al comprar un segundo producto, este solo cuesta 3,95 € |
+        Envíos gratis para pedidos superiores a 25 € | Recibe, en un plazo máximo de 3 dias, el diseño con el marco en
+        tu casa
+    </div>
+
+    <header>
+
+        <h1 onclick="navigateTo('home')">URBAN COVER ART</h1>
+        <nav>
+            <ul>
+                <!-- Pagina de inicio  -->
+                <li><a href="javascript:void(0);" onclick="navigateTo('home')">Inicio</a></li>
+                <!-- Pagina para mandar solicitud -->
+                <li><a href="javascript:void(0);" onclick="navigateTo('checkout')">Contacto</a></li>
+                <!-- Pagina inicial pero abajo -->
+                <li><a href="javascript:void(0);" onclick="navigateTo('quien-somos')">Sobre nosotros</a></li>
+                <!-- Busqueda de productos -->
+                <li><input type="text" id="search-bar" placeholder="Buscar canciones o álbumes..."
+                        oninput="searchProducts()"></li>
+            </ul>
+        </nav>
+        <!-- Cesta con contador de productos -->
+        <div class="cart">
+            <img src="Cesta/cesta.png" alt="Cesta" onclick="navigateTo('cart')" id="cart-icon">
+            <span id="cart-count">0</span>
+        </div>
+
+
+    </header>
+
+    <main>
+
+        <!-- Las dos opciones principales de la pagina de inicio (albums y canciones) -->
+        <section id="home-options">
+            <div class="option" data-target="albums">
+                <h2>ÁLBUMS</h2>
+                <img id="albums-slider-image" src="1.png" alt="Primera imagen album">
+            </div>
+
+            <div class="option" data-target="songs">
+                <h2>CANCIONES</h2>
+                <img id="songs-slider-image" src="7.png" alt="Primera imagen cancion">
+            </div>
+        </section>
+
+        <!-- Seccion de albumes -->
+        <section id="albums" style="display:none;">
+            <h3 class="titulo">ÁLBUMS</h3>
+            <div id="album-list"></div>
+        </section>
+
+        <!-- Seccion de canciones -->
+        <section id="songs" style="display:none;">
+            <h3 class="titulo2">CANCIONES</h3>
+            <div id="songs-list"></div>
+        </section>
+
+        <!-- Productos (albumes y canciones) mostrados cada uno en su seccion-->
+        <section id="products" style="display:none;">
+            <h2>Productos</h2>
+            <div id="product-list"></div>
+        </section>
+
+        <!-- Resumen de la cesta -->
+        <section id="cart" style="display:none;">
+            <h2>Tu cesta</h2>
+            <ul id="cart-items"></ul>
+            <p id="cart-total2">Total: <span id="cart-total">0.00</span>€</p>
+            <!-- Opcion de finalizar la compra -->
+            <button id="checkout-button" onclick="finalizarCompra()">Finalizar compra</button>
+        </section>
+
+        <!-- Formulario para solicitar cancion o album que no este en la pagina -->
+        <div id="checkout" style="display: none;">
+            <h2>Solicita cancion/álbum</h2>
+            <form action="https://formspree.io/f/xpwqrnjz" method="POST" id="contact-form">
+                <label for="name">Tu nombre:</label>
+                <input type="text" id="name" name="name" required>
+                <label for="email">Correo electrónico:</label>
+                <input type="email" id="email" name="email" required>
+                <label for="message">Solicitud:</label>
+                <input id="message" name="message" required>
+                <button type="submit">Enviar solicitud</button>
+            </form>
+            <p id="response-message" style="display:none;"></p>
+        </div>
+
+        <!-- Formulario para pagar -->
+        <div id="payment-container" style="display: none;">
+            <h2>Pagar ahora</h2>
+            <form id="payment-form">
+                <div id="card-email"></div>
+                <div id="card-element"></div>
+                <!-- Errores -->
+                <div id="card-errors" role="alert"></div>
+                <button id="submit">Pagar</button>
+            </form>
+        </div>
+
+        <!-- Seccion sobre nosotros explicando quienes somos -->
+        <section id="quien-somos">
+            <div class="container">
+                <h2>¿Quiénes Somos?</h2>
+                <p>En <strong>Urban Cover Art</strong>, nos apasiona el arte y la música, y por eso hemos creado una
+                    plataforma única dedicada a ofrecer portadas de álbumes icónicas y de gran diseño, perfectas para
+                    quienes buscan decorar su espacio con algo realmente especial. Nos especializamos en portadas que no
+                    solo capturan la esencia de la música, sino que también se convierten en una pieza clave de
+                    decoración para cualquier ambiente. Nuestro objetivo es transformar tu hogar u oficina en un lugar
+                    lleno de personalidad, estilo y creatividad, a través de las imágenes que definen tanto a artistas
+                    como géneros musicales.</p>
+
+                <p>Sabemos que las portadas de álbumes tienen un gran poder visual: muchas veces, estas imágenes son tan
+                    icónicas como la música misma. Es por eso que no solo ofrecemos portadas, sino que buscamos conectar
+                    con el arte visual de la música. Cada portada está pensada para ser una pieza única de decoración,
+                    ideal para darle vida a tus paredes, ya sea en tu sala de estar, dormitorio, estudio o incluso en un
+                    espacio comercial. La música y el diseño se fusionan para crear algo más que un simple objeto
+                    decorativo, convirtiéndose en una declaración de tu estilo y gustos personales.</p>
+
+                <p>Lo que nos diferencia es nuestra dedicación por ofrecer una experiencia personalizada. Sabemos que
+                    cada cliente tiene su propio gusto y visión del arte, por lo que también ofrecemos un servicio
+                    personalizado para aquellos que buscan algo único y exclusivo. Si tienes una portada de álbum que te
+                    gustaría ver en formato de decoración o si necesitas algo especial para tu espacio, estamos aquí
+                    para ayudarte a hacer realidad esa idea.</p>
+
+                <p>Además, nuestra tienda en línea es fácil de navegar, y nos aseguramos de ofrecer un servicio rápido y
+                    eficiente para que puedas recibir tus portadas de álbumes directamente en tu hogar sin
+                    complicaciones. Ya no tienes que buscar más, aquí encontrarás la forma perfecta de añadir un toque
+                    único y artístico a tu entorno. ¡Explora nuestro catálogo y empieza a decorar con estilo y pasión
+                    por la música!</p>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Pie de la pagina -->
+    <footer>
+        <div class="contenedor">
+            <p class="izquierda"><a href="#">Términos y condiciones</a><a href="#">Dudas</a><a href="#">Política de privacidad</a></p>
+        </div>
+        <div class="pagos-seguro">
+            <div class="metodos-pago">
+                <img src="amex.1024x656.png" alt="american express" width="48">
+                <img src="apple-pay.1024x702.png" alt="Apple Pay" width="45">
+                <img src="unionpay.1024x646.png" alt="Union Pay" width="46">
+                <img src="mastercard.1024x643.png" alt="MasterCard" width="50">
+                <img src="visa.1024x656.png" alt="Visa" width="48">
+                <img src="stripe.1024x426.png" alt="Stripe" width="75">
+            </div>
+        </div>
+        <hr>
+        <p class="derechos">&copy; 2025, Urbancoverart.com</p>
+    </footer>
+    
+    <!-- Script para agregar las funciones -->
+    <script src="Funciones.js"></script>
+
+</body>
+
+</html>
