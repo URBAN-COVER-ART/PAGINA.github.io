@@ -254,7 +254,7 @@ window.addEventListener('load', () => {
 let currentImageIndex = 0; // Empieza con la primera imagen
 function changeImage() {
     const images = [
-        '1.png',
+        'Imagenes_albums/1.png',
         '2.png',
         '3.png',
         '4.png',
@@ -390,83 +390,13 @@ document.getElementById('contact-form').addEventListener('submit', function (eve
         message: message
     };
 
-    // Enviar los datos al backend
-    fetch('http://localhost:3000/api/contact', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(contactData)
-    })
-        .then(response => response.json())
-        .then(data => {
-            console.log(data);
-            if (data.message === 'Mensaje enviado correctamente') {
-                document.getElementById('response-message').style.display = 'block';
-                document.getElementById('response-message').textContent = 'Tu mensaje ha sido enviado con éxito.';
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            document.getElementById('response-message').style.display = 'block';
-            document.getElementById('response-message').textContent = 'Hubo un error al enviar el mensaje.';
-        });
+    
 });
 
 // Guardar el carrito en el backend
-function saveCartToBackend(albumId, quantity) {
-    fetch('http://localhost:3000/api/cart', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(cart)
-    })
-        .then(response => response.json())
-        .then(data => {
-            console.log('Carrito guardado en el backend', data);
-        })
-        .catch(error => {
-            console.error('Error al guardar el carrito en el backend:', error);
-        });
-}
 
-// Cargar el carrito desde el backend
-function loadCartFromBackend() {
-    fetch('http://localhost:3000/api/cart')
-        .then(response => response.json())
-        .then(data => {
-            cart = data.cart;
-            updateCart();
-            updateCartCount();
-        })
-        .catch(error => {
-            console.error('Error al cargar el carrito desde el backend:', error);
-        });
-}
 
-// Cargar productos desde el backend
-function loadProducts() {
-    fetch('http://localhost:3000/api/products')
-        .then(response => response.json())
-        .then(data => {
-            const productList = document.getElementById('product-list');
-            productList.innerHTML = ''; // Limpiar productos previos
 
-            data.products.forEach(product => {
-                const productDiv = document.createElement('div');
-                productDiv.innerHTML = `
-                    <h3>${product.name}</h3>
-                    <p>Price: $${product.price.toFixed(2)}</p>
-                    <button onclick="addToCart(${product.id})">Add to Cart</button>
-                `;
-                productList.appendChild(productDiv);
-            });
-        })
-        .catch(error => {
-            console.error('Error al cargar los productos:', error);
-        });
-}
 
 document.querySelectorAll('.option').forEach(option => {
     option.addEventListener('click', () => {
