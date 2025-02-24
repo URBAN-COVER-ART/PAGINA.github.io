@@ -1,21 +1,48 @@
 const albums = [
-    { id: 1, name: "Un Verano Sin Ti", image: "5.png", price: 7.95, type: "albums" },
-    { id: 13, name: "BUENAS NOCHES", image: "13.png", price: 7.95, type: "albums" },
-    { id: 2, name: "YHLQMDLG", image: "3.png", price: 7.95, type: "albums" },
-    { id: 12, name: "DeBI TiRAR MAS FOToS", image: "12.png", price: 7.95, type: "albums" },
-    { id: 3, name: "X 100PRE", image: "4.png", price: 7.95, type: "albums" },
-    { id: 4, name: "Donde Quiero Estar", image: "6.png", price: 7.95, type: "albums" },
-    { id: 5, name: "Easy Money Baby", image: "1.png", price: 7.95, type: "albums" },
-    { id: 6, name: "Me Muevo Con Dios", image: "2.png", price: 7.95, type: "albums" },
-    { id: 7, name: "Saturno", image: "11.png", price: 7.95, type: "albums" }
+    { id: 1, name: "Un Verano Sin Ti", image: "5.webp", price: 9.99, type: "albums" },
+    { id: 13, name: "BUENAS NOCHES", image: "13.webp", price: 9.99, type: "albums" },
+    { id: 2, name: "YHLQMDLG", image: "3.webp", price: 9.99, type: "albums" },
+    { id: 12, name: "DeBI TiRAR MAS FOToS", image: "12.webp", price: 9.99, type: "albums" },
+    { id: 3, name: "X 100PRE", image: "4.webp", price: 9.99, type: "albums" },
+    { id: 4, name: "Donde Quiero Estar", image: "6.webp", price: 9.99, type: "albums" },
+    { id: 5, name: "Easy Money Baby", image: "1.webp", price: 9.99, type: "albums" },
+    { id: 6, name: "Me Muevo Con Dios", image: "2.webp", price: 9.99, type: "albums" },
+    { id: 7, name: "Saturno", image: "11.webp", price: 9.99, type: "albums" },
+    { id: 15, name: "3MEN2 KBRN", image: "15.webp", price: 9.99, type: "albums" },
+    { id: 14, name: "Mor, no le temas a la oscuridad", image: "14.webp", price: 9.99, type: "albums" },
+    { id: 16, name: "INTER SHIBUYA - LA MAFIA", image: "16.webp", price: 9.99, type: "albums" },
+    { id: 17, name: "nadie sabe lo que va a pasar manana", image: "17.webp", price: 9.99, type: "albums" }
 ];
 
+// Seleccionas el contenedor donde quieres mostrar las imágenes
+const contenedor = document.getElementById('products');
+// Generas dinámicamente las imágenes con lazy loading
+albums.forEach(producto => {
+    const img = document.createElement('img');
+    img.src = `path/to/images/${producto.image}`;
+    img.alt = producto.name;
+    img.loading = "lazy";  // Agrega el atributo lazy loading
+    img.classList.add('lazyload');  // Si usas lazysizes
+    contenedor.appendChild(img);
+});
+
 const songs = [
-    { id: 8, name: "Antidepresivos", image: "7.png", price: 7.95, type: "songs" },
-    { id: 9, name: "Sanuk Sabai Saduak", image: "8.png", price: 7.95, type: "songs" },
-    { id: 10, name: "Reina", image: "9.png", price: 7.95, type: "songs" },
-    { id: 11, name: "7 Lagrimas - Remix", image: "10.png", price: 7.95, type: "songs" }
+    { id: 8, name: "Antidepresivos", image: "7.webp", price: 9.99, type: "songs" },
+    { id: 9, name: "Sanuk Sabai Saduak", image: "8.webp", price: 9.99, type: "songs" },
+    { id: 10, name: "Reina", image: "9.webp", price: 9.99, type: "songs" },
+    { id: 11, name: "7 Lagrimas - Remix", image: "10.webp", price: 9.99, type: "songs" }
 ];
+
+const contenedor2 = document.getElementById('products');
+// Generas dinámicamente las imágenes con lazy loading
+songs.forEach(producto => {
+    const img = document.createElement('img');
+    img.src = `path/to/images/${producto.image}`;
+    img.alt = producto.name;
+    img.loading = "lazy";  // Agrega el atributo lazy loading
+    img.classList.add('lazyload');  // Si usas lazysizes
+    contenedor.appendChild(img);
+});
 
 // Unificar los productos de álbumes y canciones
 const products = [...albums, ...songs];
@@ -99,7 +126,7 @@ function addToCart(productId) {
     const product = products.find(p => p.id === productId);
     if (product) {
         const existingProduct = cart.find(item => item.id === product.id);
-        
+
         if (existingProduct) {
             // Si el producto ya está en el carrito, incrementamos su cantidad
             existingProduct.quantity++;
@@ -112,8 +139,8 @@ function addToCart(productId) {
         updateCart();
         updateCartCount();
         MostrarMensaje(product.name, product.type);
-        
-        
+
+
         saveCartToLocalStorage();
 
         // Recargamos los productos (álbumes y canciones) con los precios actualizados
@@ -129,7 +156,8 @@ function addToCart(productId) {
             }, 500); // Duración de la animación
         }
 
-}}
+    }
+}
 
 // Función para finalizar la compra
 function finalizarCompra() {
@@ -167,6 +195,8 @@ function updateCart() {
     let total = 0;
     let totalQuantity = 0;  // Contador para la cantidad total de productos
     let productIndex = 0;   // Para llevar el conteo de los productos y aplicar los descuentos
+    const progressBar = document.getElementById("progress-bar");
+    const progressText = document.getElementById("progress-text");
 
     cart.forEach(item => {
         totalQuantity += item.quantity;  // Sumar la cantidad total de productos
@@ -179,7 +209,7 @@ function updateCart() {
 
             // Si es el segundo producto o el siguiente, aplicar el precio con descuento
             if (productIndex % 2 === 1) {
-                priceToUse = 3.95;  // Aplicamos 2.95€ por el segundo producto
+                priceToUse = 4.99;  // Aplicamos 4.99€ por el segundo producto
             }
 
             itemTotalPrice += priceToUse;
@@ -190,20 +220,51 @@ function updateCart() {
         const listItem = document.createElement('li');
         listItem.innerHTML = `
             <span class="item-image-container"><img src="${item.image}" alt="${item.name}" class="cart-item-image"></span>
-            ${item.name} x${item.quantity} = ${itemTotalPrice.toFixed(2)}€
+            ${item.name} x${item.quantity} = ${itemTotalPrice.toFixed(2).replace('.', ',')}€
             <button class="remove-btn" onclick="removeFromCart(${item.id})">Eliminar</button>
         `;
-        
+
         cartItems.appendChild(listItem);
 
         // Añadir el precio del producto al total global
-        total += itemTotalPrice;
+        total += itemTotalPrice
+
+
     });
+    let totalSinEnvio = total;
+
+    if (total <= 20 && total > 1) {
+        total += 2.5;
+    }
+
+    // Función para actualizar la barra de progreso
+    function updateProgressBar() {
+        let progress = (totalSinEnvio / 20) * 100;  // Calcula el porcentaje del total respecto a 20€
+        if (progress > 100) progress = 100;// Evita que supere el 100%
+
+
+        progressBar.style.width = progress + "%";  // Cambia el ancho de la barra
+        progressText.innerText = `${totalSinEnvio.toFixed(2).replace('.', ',')}€ / 20,00€ para envío gratuito`;
+    }
+
+    // Llamamos a la función para actualizar la barra
+    updateProgressBar();
 
     // Mostrar el total final en la página
-    cartTotal.textContent = total.toFixed(2); // Actualizar total
+    cartTotal.textContent = total.toFixed(2).replace('.', ','); // Actualizar total
+    if (total > 20) {
+        // Hacer visible el mensaje de envío gratis
+        document.getElementById('envioNoGratis').style.display = 'none';
+        document.getElementById('envioGratis').style.display = 'block';
+    } else if (total <= 20 && total > 1) {
+        // Si no cumple la condición, ocultarlo
+        document.getElementById('envioGratis').style.display = 'none';
+        document.getElementById('envioNoGratis').style.display = 'block';
+    } else {
+        document.getElementById('envioGratis').style.display = 'none';
+        document.getElementById('envioNoGratis').style.display = 'none';
+    }
 }
-
 
 
 // Actualizar el contador de artículos en el carrito
@@ -224,7 +285,7 @@ function removeFromCart(productId) {
         updateCart();
         updateCartCount();
         saveCartToLocalStorage();
-        
+
     }
     // Animación de vibración en el ícono del carrito al eliminar 
     const cartIcon = document.getElementById('cart-icon');
@@ -242,25 +303,22 @@ window.addEventListener('load', () => {
 });
 
 
-
-
-
-
-
-
-
 // Cambiar imagen de slider de albums
 let currentImageIndex = 0; // Empieza con la primera imagen
 function changeImage() {
     const images = [
-        'Imagenes_albums/1.png',
-        '2.png',
-        '3.png',
-        '4.png',
-        '5.png',
-        '6.png',
-        '12.png',
-        '13.png'
+        '1.webp',
+        '2.webp',
+        '3.webp',
+        '4.webp',
+        '5.webp',
+        '6.webp',
+        '12.webp',
+        '13.webp',
+        '14.webp',
+        '15.webp',
+        '16.webp',
+        '17.webp'
     ];
     currentImageIndex = (currentImageIndex + 1) % images.length;  // Incrementa el índice y lo reinicia si llega al final
     document.getElementById('albums-slider-image').src = images[currentImageIndex];
@@ -270,10 +328,10 @@ function changeImage() {
 let currentSongIndex = 0; // Empieza con la primera imagen
 function changeSongImage() {
     const songsImages = [
-        '7.png',
-        '8.png',
-        '9.png',
-        '10.png'
+        '7.webp',
+        '8.webp',
+        '9.webp',
+        '10.webp'
     ];
     currentSongIndex = (currentSongIndex + 1) % songsImages.length; // Incrementa el índice y lo reinicia si llega al final
     document.getElementById('songs-slider-image').src = songsImages[currentSongIndex];
@@ -283,13 +341,7 @@ function changeSongImage() {
 setInterval(() => {
     changeImage();
     changeSongImage();
-}, 3000);
-
-
-
-
-
-
+}, 550);
 
 
 // Cargar los álbumes
@@ -302,20 +354,20 @@ function loadAlbums() {
 
         // Verificar si el producto está en el carrito y cuántos productos en total hay
         const totalQuantity = cart.reduce((acc, item) => acc + item.quantity, 0);
-        
+
         let priceToDisplay = album.price; // El precio normal
         let priceClass = 'price-normal';  // Establecer la clase por defecto
 
         // Si hay más de un producto en el carrito, el segundo producto cuesta 3.95€
         if (totalQuantity % 2 !== 0) {
-            priceToDisplay = 3.95;  // El precio de descuento
+            priceToDisplay = 4.99;  // El precio de descuento
             priceClass = 'price-discount';  // Cambiar la clase a la del descuento
         }
 
         albumDiv.innerHTML = `
             <h3>${album.name}</h3>
             <img src="${album.image}" alt="${album.name}">
-            <p><span class="price-label ${priceClass}">Precio: ${priceToDisplay.toFixed(2)}€</span></p>
+            <p><span class="price-label ${priceClass}">Precio: ${priceToDisplay.toFixed(2).replace('.', ',')}€</span></p>
             <button onclick="addToCart(${album.id})">Añadir a la cesta</button>
         `;
         albumList.appendChild(albumDiv);
@@ -337,14 +389,14 @@ function loadSongs() {
 
         // Si hay más de un producto en el carrito, el segundo producto cuesta 3.95€
         if (totalQuantity % 2 !== 0) {
-            priceToDisplay = 3.95;  // El precio de descuento
+            priceToDisplay = 4.99;  // El precio de descuento
             priceClass = 'price-discount';  // Cambiar la clase a la del descuento
         }
 
         songDiv.innerHTML = `
             <h3>${song.name}</h3>
             <img src="${song.image}" alt="${song.name}">
-            <p><span class="price-label ${priceClass}">Precio: ${priceToDisplay.toFixed(2)}€</span></p>
+            <p><span class="price-label ${priceClass}">Precio: ${priceToDisplay.toFixed(2).replace('.', ',')}€</span></p>
             <button onclick="addToCart(${song.id})">Añadir a la cesta</button>
         `;
 
@@ -376,27 +428,6 @@ function loadCartFromLocalStorage() {
     }
 }
 
-document.getElementById('contact-form').addEventListener('submit', function (event) {
-    event.preventDefault(); // Evitar que se recargue la página al enviar el formulario
-
-    const name = document.getElementById('name').value;
-    const email = document.getElementById('email').value;
-    const message = document.getElementById('message').value;
-
-    const contactData = {
-        name: name,
-        email: email,
-        message: message
-    };
-
-    
-});
-
-
-
-
-
-
 document.querySelectorAll('.option').forEach(option => {
     option.addEventListener('click', () => {
         const target = option.getAttribute('data-target');
@@ -404,11 +435,16 @@ document.querySelectorAll('.option').forEach(option => {
     });
 });
 
-
-document.addEventListener('contextmenu', function (event) {
-    event.preventDefault();
+document.addEventListener("contextmenu", function (event) {
+    event.preventDefault(); // Evita el menú contextual (click derecho)
 });
 
+// Evita la pulsación prolongada en imágenes en móviles (para evitar descargas)
+document.addEventListener("touchstart", function (event) {
+    if (event.target.tagName === "IMG") {
+        event.preventDefault();
+    }
+}, { passive: false });
 
 //Busqueda
 document.getElementById('search-bar').addEventListener('input', function () {
@@ -443,7 +479,7 @@ document.getElementById('search-bar').addEventListener('input', function () {
 
             // Determinar precio y clase basada en la cantidad total de productos
             if (totalQuantity % 2 !== 0) {
-                priceToDisplay = 3.95; // Precio con descuento
+                priceToDisplay = 4.99; // Precio con descuento
                 priceClass = 'price-discount'; // Clase para precio con descuento
             }
 
@@ -451,7 +487,7 @@ document.getElementById('search-bar').addEventListener('input', function () {
             albumDiv.innerHTML = `
                 <h3>${album.name}</h3>
                 <img src="${album.image}" alt="${album.name}" class="album-image">
-                <p class="${priceClass}">Precio: ${priceToDisplay.toFixed(2)}€</p>
+                <p><span class="price-label ${priceClass}">Precio: ${priceToDisplay.toFixed(2).replace('.', ',')}€</span></p>
                 <button onclick="addToCart(${album.id}, true)">Añadir a la cesta</button>
             `;
             albumList.appendChild(albumDiv);
@@ -473,7 +509,7 @@ document.getElementById('search-bar').addEventListener('input', function () {
 
             // Determinar precio y clase basada en la cantidad total de productos
             if (totalQuantity % 2 !== 0) {
-                priceToDisplay = 3.95; // Precio con descuento
+                priceToDisplay = 4.99; // Precio con descuento
                 priceClass = 'price-discount'; // Clase para precio con descuento
             }
 
@@ -481,7 +517,7 @@ document.getElementById('search-bar').addEventListener('input', function () {
             songDiv.innerHTML = `
                 <h3>${song.name}</h3>
                 <img src="${song.image}" alt="${song.name}">
-                <p class="${priceClass}">Precio: ${priceToDisplay.toFixed(2)}€</p>
+                <p><span class="price-label ${priceClass}">Precio: ${priceToDisplay.toFixed(2).replace('.', ',')}€</span></p>
                 <button onclick="addToCart(${song.id}, true)">Añadir a la cesta</button>
             `;
             songsList.appendChild(songDiv);
@@ -494,11 +530,11 @@ document.getElementById('search-bar').addEventListener('input', function () {
         if (albums.length > 0) {
             navigateTo('albums'); // Ir a álbumes
             const albumList = document.getElementById('album-list');
-            albumList.innerHTML = '<div class="no-results">SIN RESULTADOS. Recuerda que lo puedes solicitar en el apartado "Contacto".</div>';
+            albumList.innerHTML = '<div class="no-results">SIN RESULTADOS. Recuerda que lo puedes solicitar en el apartado "Solicitar".</div>';
         } else if (songs.length > 0) {
             navigateTo('songs'); // Ir a canciones
             const songsList = document.getElementById('songs-list');
-            songsList.innerHTML = '<div class="no-results">SIN RESULTADOS. Recuerda que lo puedes solicitar en el apartado "Contacto".</div>';
+            songsList.innerHTML = '<div class="no-results">SIN RESULTADOS. Recuerda que lo puedes solicitar en el apartado "Solicitar".</div>';
         }
     }
 });
@@ -534,4 +570,44 @@ form.addEventListener('submit', async (event) => {
         alert('Pago procesado con éxito.');
     }
 });
+
+// Fecha objetivo (puedes cambiar esta fecha a la que necesites)
+// Establecer la fecha en UTC (Asegúrate de usar "YYYY-MM-DDTHH:MM:SSZ")
+var countDownDate = new Date("2025-02-17T10:49:00Z").getTime();
+
+
+// Actualizar la cuenta atrás cada segundo
+
+
+var x = setInterval(function () {
+    var now = new Date().getTime();
+    var distance = countDownDate - now;
+
+    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    document.getElementById("days").innerText = days;
+    document.getElementById("hours").innerText = hours;
+    document.getElementById("minutes").innerText = minutes;
+    document.getElementById("seconds").innerText = seconds;
+
+    if (distance < 0) {
+        clearInterval(x);
+
+        document.getElementById("countdown-container").style.display = "none";
+        // Crear un elemento para el mensaje "¡Oferta finalizada!"
+        const ofertaFinalizada = document.createElement('span');
+        ofertaFinalizada.textContent = '¡Oferta finalizada!';
+        ofertaFinalizada.classList.add('oferta-finalizada'); // Agregar la clase
+
+        // Insertar el mensaje en el contenedor de la cuenta regresiva
+        const contenedorOferta = document.querySelector('.oferta-especial');
+        contenedorOferta.appendChild(ofertaFinalizada); // Agregar el mensaje
+    }
+}, 1000);
+
+
+
 
