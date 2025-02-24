@@ -1,17 +1,17 @@
 const albums = [
-    { id: 1, name: "Un Verano Sin Ti", image: "5.webp", price: 9.99, type: "albums" },
-    { id: 13, name: "BUENAS NOCHES", image: "13.webp", price: 9.99, type: "albums" },
-    { id: 2, name: "YHLQMDLG", image: "3.webp", price: 9.99, type: "albums" },
-    { id: 12, name: "DeBI TiRAR MAS FOToS", image: "12.webp", price: 9.99, type: "albums" },
-    { id: 3, name: "X 100PRE", image: "4.webp", price: 9.99, type: "albums" },
-    { id: 4, name: "Donde Quiero Estar", image: "6.webp", price: 9.99, type: "albums" },
-    { id: 5, name: "Easy Money Baby", image: "1.webp", price: 9.99, type: "albums" },
-    { id: 6, name: "Me Muevo Con Dios", image: "2.webp", price: 9.99, type: "albums" },
-    { id: 7, name: "Saturno", image: "11.webp", price: 9.99, type: "albums" },
-    { id: 15, name: "3MEN2 KBRN", image: "15.webp", price: 9.99, type: "albums" },
-    { id: 14, name: "Mor, no le temas a la oscuridad", image: "14.webp", price: 9.99, type: "albums" },
-    { id: 16, name: "INTER SHIBUYA - LA MAFIA", image: "16.webp", price: 9.99, type: "albums" },
-    { id: 17, name: "nadie sabe lo que va a pasar manana", image: "17.webp", price: 9.99, type: "albums" }
+    { id: 1, name: "Un Verano Sin Ti", image: "Imagenes/5.webp", price: 9.99, type: "albums" },
+    { id: 13, name: "BUENAS NOCHES", image: "Imagenes/13.webp", price: 9.99, type: "albums" },
+    { id: 2, name: "YHLQMDLG", image: "Imagenes/3.webp", price: 9.99, type: "albums" },
+    { id: 12, name: "DeBI TiRAR MAS FOToS", image: "Imagenes/12.webp", price: 9.99, type: "albums" },
+    { id: 3, name: "X 100PRE", image: "Imagenes/4.webp", price: 9.99, type: "albums" },
+    { id: 4, name: "Donde Quiero Estar", image: "Imagenes/6.webp", price: 9.99, type: "albums" },
+    { id: 5, name: "Easy Money Baby", image: "Imagenes/1.webp", price: 9.99, type: "albums" },
+    { id: 6, name: "Me Muevo Con Dios", image: "Imagenes/2.webp", price: 9.99, type: "albums" },
+    { id: 7, name: "Saturno", image: "Imagenes/11.webp", price: 9.99, type: "albums" },
+    { id: 15, name: "3MEN2 KBRN", image: "Imagenes/15.webp", price: 9.99, type: "albums" },
+    { id: 14, name: "Mor, no le temas a la oscuridad", image: "Imagenes/14.webp", price: 9.99, type: "albums" },
+    { id: 16, name: "INTER SHIBUYA - LA MAFIA", image: "Imagenes/16.webp", price: 9.99, type: "albums" },
+    { id: 17, name: "nadie sabe lo que va a pasar manana", image: "Imagenes/17.webp", price: 9.99, type: "albums" }
 ];
 
 // Seleccionas el contenedor donde quieres mostrar las imágenes
@@ -27,10 +27,10 @@ albums.forEach(producto => {
 });
 
 const songs = [
-    { id: 8, name: "Antidepresivos", image: "7.webp", price: 9.99, type: "songs" },
-    { id: 9, name: "Sanuk Sabai Saduak", image: "8.webp", price: 9.99, type: "songs" },
-    { id: 10, name: "Reina", image: "9.webp", price: 9.99, type: "songs" },
-    { id: 11, name: "7 Lagrimas - Remix", image: "10.webp", price: 9.99, type: "songs" }
+    { id: 8, name: "Antidepresivos", image: "Imagenes/7.webp", price: 9.99, type: "songs" },
+    { id: 9, name: "Sanuk Sabai Saduak", image: "Imagenes/8.webp", price: 9.99, type: "songs" },
+    { id: 10, name: "Reina", image: "Imagenes/9.webp", price: 9.99, type: "songs" },
+    { id: 11, name: "7 Lagrimas - Remix", image: "Imagenes/10.webp", price: 9.99, type: "songs" }
 ];
 
 const contenedor2 = document.getElementById('products');
@@ -307,18 +307,18 @@ window.addEventListener('load', () => {
 let currentImageIndex = 0; // Empieza con la primera imagen
 function changeImage() {
     const images = [
-        '1.webp',
-        '2.webp',
-        '3.webp',
-        '4.webp',
-        '5.webp',
-        '6.webp',
-        '12.webp',
-        '13.webp',
-        '14.webp',
-        '15.webp',
-        '16.webp',
-        '17.webp'
+        'Imagenes/1.webp',
+        'Imagenes/2.webp',
+        'Imagenes/3.webp',
+        'Imagenes/4.webp',
+        'Imagenes/5.webp',
+        'Imagenes/6.webp',
+        'Imagenes/12.webp',
+        'Imagenes/13.webp',
+        'Imagenes/14.webp',
+        'Imagenes/15.webp',
+        'Imagenes/16.webp',
+        'Imagenes/17.webp'
     ];
     currentImageIndex = (currentImageIndex + 1) % images.length;  // Incrementa el índice y lo reinicia si llega al final
     document.getElementById('albums-slider-image').src = images[currentImageIndex];
@@ -328,10 +328,10 @@ function changeImage() {
 let currentSongIndex = 0; // Empieza con la primera imagen
 function changeSongImage() {
     const songsImages = [
-        '7.webp',
-        '8.webp',
-        '9.webp',
-        '10.webp'
+        'Imagenes/7.webp',
+        'Imagenes/8.webp',
+        'Imagenes/9.webp',
+        'Imagenes/10.webp'
     ];
     currentSongIndex = (currentSongIndex + 1) % songsImages.length; // Incrementa el índice y lo reinicia si llega al final
     document.getElementById('songs-slider-image').src = songsImages[currentSongIndex];
